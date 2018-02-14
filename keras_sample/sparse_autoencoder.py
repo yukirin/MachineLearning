@@ -20,11 +20,11 @@ input_img = Input(shape=(784, ))
 encoded = Dense(
     encoding_dim,
     activation='relu',
-    activity_regularizer=regularizers.l1(1e-4))(input_img)
+    activity_regularizer=regularizers.l2(1e-4))(input_img)
 decoded = Dense(784, activation='sigmoid')(encoded)
 autoencoder = Model(inputs=input_img, outputs=decoded)
 
-autoencoder.compile(optimizer='adam', loss='mse')
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 autoencoder.fit(
     x_train,
     x_train,

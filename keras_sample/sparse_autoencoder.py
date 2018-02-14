@@ -20,7 +20,7 @@ input_img = Input(shape=(784, ))
 encoded = Dense(
     encoding_dim,
     activation='relu',
-    activity_regularizer=regularizers.activity_l1(1e-4))(input_img)
+    activity_regularizer=regularizers.l1(1e-4))(input_img)
 decoded = Dense(784, activation='sigmoid')(encoded)
 autoencoder = Model(inputs=input_img, outputs=decoded)
 
@@ -34,6 +34,10 @@ autoencoder.fit(
     validation_data=(x_test, x_test))
 
 decoded_imgs = autoencoder.predict(x_test)
+
+encoder = Model(inputs=input_img, outputs=encoded)
+encoded_imgs = encoder.predict(x_test)
+print('encoded img mean:', encoded_imgs.mean())
 
 n = 10
 plt.figure(figsize=(20, 4))
